@@ -2,6 +2,10 @@
 
 ---
 
+Ce dépôt présente un guide complet pour la mise en place d’une infrastructure de supervision réseau avec Zabbix et Grafana sous Debian 13. Il couvre l’installation, la configuration et l’intégration des différents outils de monitoring. Tu y apprendras à déployer le serveur Zabbix, à connecter Grafana pour la visualisation des métriques, et à superviser efficacement des serveurs Linux, Windows ainsi que des équipements réseau grâce au protocole SNMP !
+
+---
+
 ## `📑`︲Sommaire (cliquez pour accéder directement à la section souhaitée)
 
 1. [`📘`︲Introduction.](#introduction)
