@@ -129,3 +129,15 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 ### `❔`︲Contexte et objectifs du TP.
 > [!NOTE]
 > Ce projet s'inscrit dans le cadre du centre de formation Descartes-Bleu, qui doit assurer la continuité de service de 24 salles de travaux pratiques. Pour garantir le bon fonctionnement des nombreux services (DNS, Web, SSH, MariaDB, etc.) et des équipements réseaux (switchs, routeurs), une solution de supervision proactive et réactive est indispensable.
+
+---
+
+### `🎯`︲Objectifs de l'intervention
+
+L'intervention vise à mettre en place une infrastructure de monitoring complète avec les buts suivants :
+Installation et configuration du duo Zabbix et Grafana.
+Déploiement d'agents sur des serveurs hétérogènes (Linux Debian et Windows Server).
+Supervision réseau via SNMP pour les équipements actifs comme le switch Cisco 2960.
+Visualisation de données par la création de tableaux de bord personnalisés et interactifs sur Grafana.
+
+---
