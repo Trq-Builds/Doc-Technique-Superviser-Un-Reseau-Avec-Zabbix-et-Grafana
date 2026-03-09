@@ -142,3 +142,22 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > - Visualisation de données par la création de tableaux de bord personnalisés et interactifs sur Grafana.
 
 ---
+
+## 🛠️ Présentation des outils utilisés
+
+Pour répondre aux besoins de supervision du centre de formation, nous utilisons une stack de monitoring robuste et complémentaire.
+
+### 🏟️ Zabbix
+[cite_start]Zabbix est la pièce maîtresse de l'infrastructure[cite: 16]. [cite_start]C'est une solution de monitoring de classe entreprise capable de surveiller des métriques récupérées sur des serveurs ou des équipements réseau[cite: 12, 13].
+* [cite_start]**Rôle :** Collecte, stockage et analyse des données de performance et de disponibilité[cite: 14].
+* [cite_start]**Méthodes de collecte :** Repose essentiellement sur l'utilisation d'agents Zabbix et du protocole SNMP[cite: 15].
+
+### 📊 Grafana
+[cite_start]Grafana est l'outil de visualisation par excellence qui vient compléter Zabbix[cite: 18].
+* [cite_start]**Rôle :** Transformation des données brutes en tableaux de bord (dashboards) dynamiques et lisibles[cite: 71, 77].
+* [cite_start]**Intégration :** L'ajout et la configuration d'un plugin Zabbix dédié permettent la communication entre les deux services[cite: 47, 50].
+
+### 🛰️ Agents et Protocoles
+Pour que la supervision soit totale, deux méthodes de communication sont employées :
+* [cite_start]**Zabbix Agent :** Un logiciel léger installé sur les serveurs Linux et Windows[cite: 19, 54]. [cite_start]La configuration passe par le fichier `zabbix_agentd.conf` pour définir les paramètres de communication avec le serveur[cite: 55].
+* [cite_start]**SNMP (Simple Network Management Protocol) :** Protocole standard utilisé pour interroger les matériels actifs comme le switch Cisco 2960[cite: 20, 181]. [cite_start]Il nécessite la définition d'une communauté (ex: `descartesbleu`) pour autoriser la lecture des informations[cite: 176, 208].
