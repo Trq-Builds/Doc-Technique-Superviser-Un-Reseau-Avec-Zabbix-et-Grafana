@@ -147,21 +147,19 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 ### ` 🧰 `︲Présentation des outils et prérequis.
 > [!IMPORTANT]
 > **Présentation des outils et prérequis :**
-> - ` 🏟️ `︲**Zabbix :** *Solution de supervision Enterprise-class* ︲[`🌐`](https://www.zabbix.com/) [cite: 16, 115]
+> - ` 🏟️ `︲**Zabbix :** *Solution de supervision Enterprise-class* ︲[`🌐`](https://www.zabbix.com/)
 > 
-> - ` 📊 `︲**Grafana :** *Plateforme d'analyse et de visualisation* ︲[`🌐`](https://grafana.com/) [cite: 18, 45]
+> - ` 📊 `︲**Grafana :** *Plateforme d'analyse et de visualisation* ︲[`🌐`](https://grafana.com/)
 > 
-> - ` 🐬 `︲**MariaDB :** *Système de gestion de base de données (MySQL)* ︲[`🌐`](https://mariadb.org/) [cite: 10, 43]
+> - ` 🐬 `︲**MariaDB :** *Système de gestion de base de données (MySQL)* ︲[`🌐`](https://mariadb.org/)
 > 
-> - ` 🐧 `︲**Debian 13 :** *OS pour srv-zabbix et srv-fog* ︲[`🌐`](https://www.debian.org/) [cite: 12, 41]
+> - ` 🐧 `︲**Debian 13 :** *OS pour srv-zabbix et srv-fog* ︲[`🌐`](https://www.debian.org/)
 > 
-> - ` 🪟 `︲**Windows Server 2022 :** *OS pour srv-ad1* ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022) [cite: 140]
+> - ` 🪟 `︲**Windows Server 2022 :** *OS pour srv-ad1* ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022)
 > 
-> - ` 🔌 `︲**Cisco 2960 :** *Matériel actif réseau (Switch)* ︲[`🌐`](https://www.cisco.com/) [cite: 32, 181]
+> - ` 🔌 `︲**Cisco 2960 :** *Matériel actif réseau (Switch)* ︲[`🌐`](https://www.cisco.com/)
 > 
-> - ` 📦 `︲**Virtualisation :** *VMware ou Hyper-V (Snapshots recommandés)* ︲[`🌐`](https://www.vmware.com/) [cite: 33]
-> 
-> - ` 👤 `︲**Interface Chaise-Clavier fonctionnelle.** 🫵 [cite: 24]
+> - ` 📦 `︲**Virtualisation :** *VMware ou Hyper-V (Snapshots recommandés)* ︲[`🌐`](https://www.vmware.com/)
 > 
 > - ` ☕ `︲**Un peu de patience !**
 
