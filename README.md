@@ -100,6 +100,5 @@
    ---
 
 13. [`🧰`︲Outils et ressources utilisées.](#outils-ressources)
-14. [`📚`︲Technique et méthode.](#technique-methode)
 
 ---
