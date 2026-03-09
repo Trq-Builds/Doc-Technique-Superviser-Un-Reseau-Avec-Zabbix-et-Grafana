@@ -136,9 +136,9 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 
 > [!NOTE]
 > L'intervention vise à mettre en place une infrastructure de monitoring complète avec les buts suivants :
-> Installation et configuration du duo Zabbix et Grafana.
-> Déploiement d'agents sur des serveurs hétérogènes (Linux Debian et Windows Server).
-> Supervision réseau via SNMP pour les équipements actifs comme le switch Cisco 2960.
-> Visualisation de données par la création de tableaux de bord personnalisés et interactifs sur Grafana.
+> - Installation et configuration du duo Zabbix et Grafana.
+> - Déploiement d'agents sur des serveurs hétérogènes (Linux Debian et Windows Server).
+> - Supervision réseau via SNMP pour les équipements actifs comme le switch Cisco 2960.
+> - Visualisation de données par la création de tableaux de bord personnalisés et interactifs sur Grafana.
 
 ---
