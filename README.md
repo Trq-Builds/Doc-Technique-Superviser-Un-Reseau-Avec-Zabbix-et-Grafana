@@ -128,5 +128,4 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 <a id="contexte-et-objectifs"></a>
 ### `❔`︲Contexte et objectifs du TP.
 > [!NOTE]
-> Tu vas apprendre à installer et configurer un serveur FOG, à capturer et déployer des images système sur un parc de machines, à gérer les configurations réseau (DHCP, etc...), et à automatiser le déploiement d’environnements Windows ou Linux dans un contexte professionnel.
-> L’objectif est de te permettre de maîtriser les bases de la gestion de parc informatique et de la clonage d’images via FOG, un outil libre et puissant, afin de déployer rapidement et efficacement des postes de travail dans un environnement de type SISR.
+> Ce projet s'inscrit dans le cadre du centre de formation Descartes-Bleu, qui doit assurer la continuité de service de 24 salles de travaux pratiques. Pour garantir le bon fonctionnement des nombreux services (DNS, Web, SSH, MariaDB, etc.) et des équipements réseaux (switchs, routeurs), une solution de supervision proactive et réactive est indispensable.
