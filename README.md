@@ -164,3 +164,31 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > - ` ☕ `︲**Un peu de patience !**
 
 ---
+
+<a id="mission-3-supervision-serveur-fog"></a>
+### ` 🐧 `︲Mission 3 : Superviser le serveur Linux (srv-fog).
+> [!NOTE]
+> **Objectif :** Déploiement de l'agent Zabbix sur le serveur de déploiement FOG et remontée des premières métriques.
+
+#### 3.1. Installation et configuration de l'agent
+Sur le serveur **srv-fog** (Debian) :
+* **Installation :** `apt install zabbix-agent`.
+* **Configuration :** Modifier `/etc/zabbix/zabbix_agentd.conf` :
+    * `Server=172.16.X.10` (IP de ton srv-zabbix)
+    * `ServerActive=172.16.X.10`
+    * `Hostname=srv-fog`
+* **Relance :** `systemctl restart zabbix-agent`.
+
+#### 3.2. Ajout de l'hôte dans Zabbix
+* **Création :** Menu `Configuration` > `Hosts` > `Create host`.
+* **Templates :** Appliquer le modèle "Linux by Zabbix agent".
+* **Interface :** Ajouter une interface de type "Agent" avec l'IP du serveur FOG.
+
+#### 3.3. Visualisation sur Grafana
+* **Dashboard :** Importer le tableau de bord officiel "Zabbix - Full Server Status" (ID: 5363 ou via le plugin).
+* **Vérification :** S'assurer que les graphiques de CPU, RAM et disque se remplissent en temps réel.
+
+> [!TIP]
+> **Test de connectivité :** Utilise la commande `zabbix_get -s 172.16.X.FOG -k agent.ping` depuis le serveur Zabbix pour valider la communication.
+
+---
