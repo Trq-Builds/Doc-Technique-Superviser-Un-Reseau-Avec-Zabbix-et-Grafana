@@ -155,7 +155,7 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > 
 > - ` 🐧 `︲**Debian 13 :** *OS pour srv-zabbix et srv-fog* ︲[`🌐`](https://www.debian.org/)
 > 
-> - ` 🪟 `︲**Windows Server 2022 :** *OS pour srv-ad1* ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022)
+> - ` 🪟 `︲**Windows Server 2025 :** *OS pour srv-ad1* ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022)
 > 
 > - ` 🔌 `︲**Cisco 2960 :** *Matériel actif réseau (Switch)* ︲[`🌐`](https://www.cisco.com/)
 > 
