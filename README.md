@@ -8,7 +8,6 @@
 ![Zabbix](https://img.shields.io/badge/Zabbix-Monitoring-CC0000?style=for-the-badge&logo=zabbix&logoColor=white)
 ![Grafana](https://img.shields.io/badge/Grafana-Dashboard-F46800?style=for-the-badge&logo=grafana&logoColor=white)
 ![SNMP](https://img.shields.io/badge/SNMP-Network%20Monitoring-0078D4?style=for-the-badge)
-![Windows Server](https://img.shields.io/badge/Windows%20Server-2022-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Cisco](https://img.shields.io/badge/Cisco-Switch%202960-1BA0D7?style=for-the-badge&logo=cisco&logoColor=white)
 
 </p>
