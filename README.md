@@ -124,7 +124,7 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 
 ---
 
-<a id="contexte-et-objectifs"></a>
+<a id="contexte-problematique"></a>
 ### `❔`︲Contexte et objectifs du TP.
 > [!NOTE]
 > Ce projet s'inscrit dans le cadre du centre de formation Descartes-Bleu, qui doit assurer la continuité de service de 24 salles de travaux pratiques. Pour garantir le bon fonctionnement des nombreux services (DNS, Web, SSH, MariaDB, etc.) et des équipements réseaux (switchs, routeurs), une solution de supervision proactive et réactive est indispensable.
