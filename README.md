@@ -242,6 +242,7 @@ systemctl enable grafana-server --now
 
 ---
 
+<a id="plugin-zabbix-grafana"></a>
 ## `🔌`︲Ajout et configuration du plugin Zabbix.
 
 ---
