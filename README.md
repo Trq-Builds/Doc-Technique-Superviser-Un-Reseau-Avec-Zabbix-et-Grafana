@@ -268,5 +268,3 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` :
 > [!TIP]
 > **Félicitations !** Ton infrastructure est maintenant prête. Les deux services communiquent.
 > Tu peux maintenant passer à la **Mission 3** pour superviser tes premiers hôtes.
-
-```
