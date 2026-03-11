@@ -147,20 +147,12 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > [!IMPORTANT]
 > **Présentation des outils et prérequis :**
 > - ` 🏟️ `︲**Zabbix :** *Solution de supervision Enterprise-class* ︲[`🌐`](https://www.zabbix.com/)
-> 
 > - ` 📊 `︲**Grafana :** *Plateforme d'analyse et de visualisation* ︲[`🌐`](https://grafana.com/)
-> 
 > - ` 🐬 `︲**MariaDB :** *Système de gestion de base de données (MySQL)* ︲[`🌐`](https://mariadb.org/)
-> 
-> - ` 🐧 `︲**Debian 13 :** *OS pour srv-zabbix et srv-fog* ︲[`🌐`](https://www.debian.org/)
-> 
+> - ` 🐧 `︲**Debian 13 :** *OS pour srv-zabbix* ︲[`🌐`](https://www.debian.org/)
 > - ` 🪟 `︲**Windows Server 2025 :** *OS pour srv-ad1* ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022)
-> 
 > - ` 🔌 `︲**Cisco 2960 :** *Matériel actif réseau (Switch)* ︲[`🌐`](https://www.cisco.com/)
-> 
-> - ` 📦 `︲**Virtualisation :** *VMware ou Hyper-V (Snapshots recommandés)* ︲[`🌐`](https://www.vmware.com/)
-> 
-> - ` ☕ `︲**Un peu de patience !**
+> - ` 📦 `︲**Virtualisation :** *VMware* ︲[`🌐`](https://www.vmware.com/)
 
 ---
 
