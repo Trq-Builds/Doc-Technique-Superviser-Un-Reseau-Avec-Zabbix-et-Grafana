@@ -156,30 +156,117 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 
 ---
 
-<a id="mission-3-supervision-serveur-fog"></a>
-### ` 🐧 `︲Mission 3 : Superviser le serveur Linux (srv-fog).
-> [!NOTE]
-> **Objectif :** Déploiement de l'agent Zabbix sur le serveur de déploiement FOG et remontée des premières métriques.
-
-#### 3.1. Installation et configuration de l'agent
-Sur le serveur **srv-fog** (Debian) :
-* **Installation :** `apt install zabbix-agent`.
-* **Configuration :** Modifier `/etc/zabbix/zabbix_agentd.conf` :
-    * `Server=172.16.X.10` (IP de ton srv-zabbix)
-    * `ServerActive=172.16.X.10`
-    * `Hostname=srv-fog`
-* **Relance :** `systemctl restart zabbix-agent`.
-
-#### 3.2. Ajout de l'hôte dans Zabbix
-* **Création :** Menu `Configuration` > `Hosts` > `Create host`.
-* **Templates :** Appliquer le modèle "Linux by Zabbix agent".
-* **Interface :** Ajouter une interface de type "Agent" avec l'IP du serveur FOG.
-
-#### 3.3. Visualisation sur Grafana
-* **Dashboard :** Importer le tableau de bord officiel "Zabbix - Full Server Status" (ID: 5363 ou via le plugin).
-* **Vérification :** S'assurer que les graphiques de CPU, RAM et disque se remplissent en temps réel.
-
-> [!TIP]
-> **Test de connectivité :** Utilise la commande `zabbix_get -s 172.16.X.FOG -k agent.ping` depuis le serveur Zabbix pour valider la communication.
+<a id="installation-infrastructure"></a>
+# `🛠️`︲Installation de l’infrastructure de supervision.
 
 ---
+
+> [!NOTE]
+> Cette section détaille la mise en place du cœur de notre système : **Zabbix** pour la collecte et le traitement des données, et **Grafana** pour une visualisation haute fidélité. 
+> L'objectif est d'obtenir une stack opérationnelle, sécurisée et interconnectée.
+
+---
+
+<a id="installation-zabbix"></a>
+## `🐧`︲Installation de Zabbix sur Debian 13.
+
+> [!IMPORTANT]
+> **Prérequis Base de données :** Nous utiliserons **MariaDB**. Assure-toi que le service est installé et actif avant de lancer le script de schéma Zabbix.
+
+1️⃣︲**Ajout du dépôt officiel Zabbix** On récupère la configuration du dépôt pour Debian 13 (Trixie) :
+```bash
+# Téléchargement du paquet de configuration du dépôt
+wget [https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest+debian12.deb](https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest+debian12.deb)
+dpkg -i zabbix-release_latest+debian12.deb
+apt update
+
+```
+
+2️⃣︲**Installation du serveur, du frontend et de l'agent**
+
+```bash
+apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
+
+```
+
+3️⃣︲**Initialisation de la base de données**
+Connecte-toi à MariaDB pour créer l'utilisateur et la base :
+
+```sql
+mysql -u root -p
+-- Dans la console MariaDB :
+create database zabbix character set utf8mb4 collate utf8mb4_bin;
+create user zabbix@localhost identified by 'password_zabbix';
+grant all privileges on zabbix.* to zabbix@localhost;
+set global log_bin_trust_function_creators = 1;
+quit;
+
+```
+
+4️⃣︲**Importation du schéma initial**
+
+```bash
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
+
+```
+
+---
+
+## `📊`︲Installation de Grafana.
+
+---
+
+> [!TIP]
+> Grafana permet de transformer vos données Zabbix en tableaux de bord dynamiques et esthétiques. L'installation via le dépôt officiel garantit les mises à jour de sécurité.
+
+1️⃣︲**Installation des dépendances et du dépôt**
+
+```bash
+apt install -y apt-transport-https software-properties-common wget
+mkdir -p /etc/apt/keyrings/
+wget -q -O - [https://apt.grafana.com/gpg.key](https://apt.grafana.com/gpg.key) | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] [https://apt.grafana.com](https://apt.grafana.com) stable main" | tee /etc/apt/sources.list.d/grafana.list
+apt update
+
+```
+
+2️⃣︲**Installation et démarrage du service**
+
+```bash
+apt install grafana -y
+systemctl enable grafana-server --now
+
+```
+
+---
+
+## `🔌`︲Ajout et configuration du plugin Zabbix.
+
+---
+
+> [!IMPORTANT]
+> Pour que Grafana puisse "parler" à Zabbix, nous devons utiliser l'API de Zabbix via un plugin dédié.
+
+1️⃣︲**Installation du plugin en ligne de commande**
+
+```bash
+grafana-cli plugins install alexanderzobnin-zabbix-app
+systemctl restart grafana-server
+
+```
+
+2️⃣︲**Configuration de la Data Source (Interface Web)**
+Rendez-vous sur `http://<IP_SERVEUR>:3000` :
+
+* **Menu :** `Connections` > `Data Sources` > `Add data source`.
+* **Type :** Rechercher `Zabbix`.
+* **URL :** `http://localhost/zabbix/api_jsonrpc.php`
+* **Auth :** Renseigne ton login/pass Zabbix (Admin / zabbix par défaut).
+
+---
+
+> [!TIP]
+> **Félicitations !** Ton infrastructure est maintenant prête. Les deux services communiquent.
+> Tu peux maintenant passer à la **Mission 3** pour superviser tes premiers hôtes.
+
+```
