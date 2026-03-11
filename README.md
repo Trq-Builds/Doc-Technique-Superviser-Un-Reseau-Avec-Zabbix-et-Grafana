@@ -213,6 +213,7 @@ zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-charact
 
 ---
 
+<a id="installation-grafana"></a>
 ## `📊`︲Installation de Grafana.
 
 ---
