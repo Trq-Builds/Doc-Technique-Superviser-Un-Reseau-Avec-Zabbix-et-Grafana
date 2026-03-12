@@ -145,6 +145,7 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 
 <a id="presentation-outils"></a>
 ### ` 🧰 `︲Présentation des outils et prérequis.
+
 > [!IMPORTANT]
 > **Présentation des outils et prérequis :**
 > - ` 🏟️ `︲**Zabbix :** *Solution de supervision Enterprise-class* ︲[`🌐`](https://www.zabbix.com/)
