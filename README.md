@@ -292,4 +292,8 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` :
 
 ---
 
+<a id="installation-agent-fog"></a>
+## `📦`︲Installation de l’agent Zabbix sur le serveur FOG.
+
+---
 
