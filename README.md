@@ -175,6 +175,10 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > [!IMPORTANT]
 > **Prérequis Base de données :** Nous utiliserons **MariaDB**. Assure-toi que le service est installé et actif avant de lancer le script de schéma Zabbix.
 
+
+
+--- 
+
 1️⃣︲**Ajout du dépôt officiel Zabbix** On récupère la configuration du dépôt pour Debian 13 (Trixie) :
 ```bash
 # Téléchargement du paquet de configuration du dépôt
