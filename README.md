@@ -175,7 +175,15 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > [!IMPORTANT]
 > **Prérequis Base de données :** Nous utiliserons **MariaDB**. Assure-toi que le service est installé et actif avant de lancer le script de schéma Zabbix.
 
+## ` 🐬 `︲Installation et configuration de MariaDB.
+> [!NOTE]
+> **Prérequis :** La mise en place de Zabbix nécessite une base de données relationnelle fonctionnelle (Étape C de la documentation officielle).
 
+#### 1.1. Installation du service
+Le serveur de base de données est installé sur la machine **srv-zabbix**.
+```bash
+# Mise à jour des dépôts et installation
+apt update && apt install mariadb-server -y
 
 --- 
 
