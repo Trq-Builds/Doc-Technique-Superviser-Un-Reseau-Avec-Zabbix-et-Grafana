@@ -287,4 +287,9 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` :
 
 ---
 
+<a id="supervision-fog-zabbix"></a>
+# `🖥️`︲Supervision du serveur FOG avec Zabbix.
+
+---
+
 
