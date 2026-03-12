@@ -157,7 +157,10 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > - ` 📦 `︲**Virtualisation :** *VMware* ︲[`🌐`](https://www.vmware.com/)
 
 > [!NOTE]
-> Pour installer Debian 13
+> Pour installer Debian 13, vous pouvez, si besoin, vous référer au guide suivant. Il détaille les différentes étapes de l’installation et pourra éventuellement vous être utile comme support : [https://github.com/Trq-Builds/Doc-Technique-installation-Debian-13-sans-interface-graphique](https://github.com/Trq-Builds/Doc-Technique-installation-Debian-13-sans-interface-graphique)
+
+
+
 
 ---
 
