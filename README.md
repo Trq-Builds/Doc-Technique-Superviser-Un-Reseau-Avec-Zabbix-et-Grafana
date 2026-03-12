@@ -184,10 +184,11 @@ Le serveur de base de données est installé sur la machine **srv-zabbix**.
 ```bash
 # Mise à jour des dépôts et installation
 apt update && apt install mariadb-server -y
-
+```
 --- 
 
 1️⃣︲**Ajout du dépôt officiel Zabbix** On récupère la configuration du dépôt pour Debian 13 (Trixie) :
+
 ```bash
 # Téléchargement du paquet de configuration du dépôt
 wget [https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest+debian12.deb](https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest+debian12.deb)
