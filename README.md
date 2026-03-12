@@ -156,11 +156,10 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > - ` 🔌 `︲**Cisco 2960 :** *Matériel actif réseau (Switch)* ︲[`🌐`](https://www.cisco.com/)
 > - ` 📦 `︲**Virtualisation :** *VMware* ︲[`🌐`](https://www.vmware.com/)
 
+---
+
 > [!NOTE]
 > Pour installer Debian 13, vous pouvez, si besoin, vous référer au guide suivant. Il détaille les différentes étapes de l’installation et pourra éventuellement vous être utile comme support : [https://github.com/Trq-Builds/Doc-Technique-installation-Debian-13-sans-interface-graphique](https://github.com/Trq-Builds/Doc-Technique-installation-Debian-13-sans-interface-graphique)
-
-
-
 
 ---
 
