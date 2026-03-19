@@ -165,78 +165,90 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 <a id="installation-infrastructure"></a>
 # `🛠️`︲Installation de l’infrastructure de supervision.
 
----
+-----
 
-> [!NOTE]
-> Cette section détaille la mise en place du cœur de notre système : **Zabbix** pour la collecte et le traitement des données, et **Grafana** pour une visualisation haute fidélité. 
+> [\!NOTE]
+> Cette section détaille la mise en place du cœur de notre système : **Zabbix** pour la collecte et le traitement des données, et **Grafana** pour une visualisation haute fidélité.
 > L'objectif est d'obtenir une stack opérationnelle, sécurisée et interconnectée.
 
----
+-----
 
-<a id="installation-zabbix"></a>
+\<a id="installation-zabbix"\>\</a\>
+
 ## `🐧`︲Installation de Zabbix sur Debian 13.
 
-> [!IMPORTANT]
+> [\!IMPORTANT]
 > **Prérequis Base de données :** Nous utiliserons **MariaDB**. Assure-toi que le service est installé et actif avant de lancer le script de schéma Zabbix.
 
-## ` 🐬 `︲Installation et configuration de MariaDB.
-> [!NOTE]
+## `🐬`︲Installation et configuration de MariaDB.
+
+> [\!NOTE]
 > **Prérequis :** La mise en place de Zabbix nécessite une base de données relationnelle fonctionnelle (Étape C de la documentation officielle).
 
 #### 1.1. Installation du service
+
 Le serveur de base de données est installé sur la machine **srv-zabbix**.
+
 ```bash
-# Mise à jour des dépôts et installation
+# Mise à jour des dépôts et installation de MariaDB
 apt update && apt install mariadb-server -y
+systemctl enable --now mariadb
 ```
---- 
 
-1️⃣︲**Ajout du dépôt officiel Zabbix** On récupère la configuration du dépôt pour Debian 13 (Trixie) :
+-----
+
+1️⃣︲**Ajout du dépôt officiel Zabbix (Debian 13)** On récupère la configuration spécifique pour Debian 13 (Trixie) pour éviter les conflits de dépendances :
 
 ```bash
-# Téléchargement du paquet de configuration du dépôt
-wget [https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest+debian12.deb](https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest+debian12.deb)
-dpkg -i zabbix-release_latest+debian12.deb
+# Téléchargement et installation du paquet de configuration du dépôt
+wget https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_7.0-2+debian13_all.deb
+dpkg -i zabbix-release_7.0-2+debian13_all.deb
 apt update
-
 ```
 
 2️⃣︲**Installation du serveur, du frontend et de l'agent**
 
 ```bash
 apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
-
 ```
 
 3️⃣︲**Initialisation de la base de données**
-Connecte-toi à MariaDB pour créer l'utilisateur et la base :
+Connecte-toi à MariaDB pour créer l'utilisateur et la base de données dédiée :
 
 ```sql
-mysql -u root -p
+mysql -u root
 -- Dans la console MariaDB :
 create database zabbix character set utf8mb4 collate utf8mb4_bin;
 create user zabbix@localhost identified by 'password_zabbix';
 grant all privileges on zabbix.* to zabbix@localhost;
 set global log_bin_trust_function_creators = 1;
 quit;
-
 ```
 
 4️⃣︲**Importation du schéma initial**
+Cette commande structure la base de données avec les tables nécessaires au fonctionnement de Zabbix :
 
 ```bash
 zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
-
 ```
 
----
+5️⃣︲**Configuration et démarrage du serveur**
+Édite le fichier `/etc/zabbix/zabbix_server.conf` pour renseigner `DBPassword=password_zabbix`, puis redémarre les services :
 
-<a id="installation-grafana"></a>
+```bash
+systemctl restart zabbix-server zabbix-agent apache2
+systemctl enable zabbix-server zabbix-agent apache2
+```
+
+-----
+
+\<a id="installation-grafana"\>\</a\>
+
 ## `📊`︲Installation de Grafana.
 
----
+-----
 
-> [!TIP]
+> [\!TIP]
 > Grafana permet de transformer vos données Zabbix en tableaux de bord dynamiques et esthétiques. L'installation via le dépôt officiel garantit les mises à jour de sécurité.
 
 1️⃣︲**Installation des dépendances et du dépôt**
@@ -244,10 +256,9 @@ zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-charact
 ```bash
 apt install -y apt-transport-https software-properties-common wget
 mkdir -p /etc/apt/keyrings/
-wget -q -O - [https://apt.grafana.com/gpg.key](https://apt.grafana.com/gpg.key) | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] [https://apt.grafana.com](https://apt.grafana.com) stable main" | tee /etc/apt/sources.list.d/grafana.list
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | tee /etc/apt/sources.list.d/grafana.list
 apt update
-
 ```
 
 2️⃣︲**Installation et démarrage du service**
@@ -255,17 +266,17 @@ apt update
 ```bash
 apt install grafana -y
 systemctl enable grafana-server --now
-
 ```
 
----
+-----
 
-<a id="plugin-zabbix-grafana"></a>
+\<a id="plugin-zabbix-grafana"\>\</a\>
+
 ## `🔌`︲Ajout et configuration du plugin Zabbix.
 
----
+-----
 
-> [!IMPORTANT]
+> [\!IMPORTANT]
 > Pour que Grafana puisse "parler" à Zabbix, nous devons utiliser l'API de Zabbix via un plugin dédié.
 
 1️⃣︲**Installation du plugin en ligne de commande**
@@ -273,18 +284,18 @@ systemctl enable grafana-server --now
 ```bash
 grafana-cli plugins install alexanderzobnin-zabbix-app
 systemctl restart grafana-server
-
 ```
 
 2️⃣︲**Configuration de la Data Source (Interface Web)**
-Rendez-vous sur `http://<IP_SERVEUR>:3000` :
+Rendez-vous sur `http://<IP_SERVEUR>:3000` (identifiants par défaut : `admin` / `admin`) :
 
-* **Menu :** `Connections` > `Data Sources` > `Add data source`.
-* **Type :** Rechercher `Zabbix`.
-* **URL :** `http://localhost/zabbix/api_jsonrpc.php`
-* **Auth :** Renseigne ton login/pass Zabbix (Admin / zabbix par défaut).
+  * **Menu :** `Connections` \> `Data Sources` \> `Add data source`.
+  * **Type :** Rechercher `Zabbix`.
+  * **URL :** `http://localhost/zabbix/api_jsonrpc.php`
+  * **Auth :** Renseigne ton login/pass Zabbix (Admin / zabbix par défaut).
+  * **Enable :** N'oublie pas d'activer le plugin dans Grafana (Administration \> Plugins \> Zabbix \> Enable).
 
----
+-----
 
 > [!TIP]
 > Ton infrastructure est maintenant prête. Les deux services communiquent.
