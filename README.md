@@ -287,7 +287,7 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` :
 ---
 
 > [!TIP]
-> **Félicitations !** Ton infrastructure est maintenant prête. Les deux services communiquent.
+> Ton infrastructure est maintenant prête. Les deux services communiquent.
 
 ---
 
