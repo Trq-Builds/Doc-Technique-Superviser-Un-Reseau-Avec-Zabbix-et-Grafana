@@ -173,8 +173,7 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 
 -----
 
-\<a id="installation-zabbix"\>\</a\>
-
+<a id="installation-zabbix"></a>
 ## `🐧`︲Installation de Zabbix sur Debian 13.
 
 > [\!IMPORTANT]
@@ -182,7 +181,7 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 
 ## `🐬`︲Installation et configuration de MariaDB.
 
-> [\!NOTE]
+> [!NOTE]
 > **Prérequis :** La mise en place de Zabbix nécessite une base de données relationnelle fonctionnelle (Étape C de la documentation officielle).
 
 #### 1.1. Installation du service
@@ -195,7 +194,7 @@ apt update && apt install mariadb-server -y
 systemctl enable --now mariadb
 ```
 
------
+---
 
 1️⃣︲**Ajout du dépôt officiel Zabbix (Debian 13)** On récupère la configuration spécifique pour Debian 13 (Trixie) pour éviter les conflits de dépendances :
 
@@ -240,13 +239,12 @@ systemctl restart zabbix-server zabbix-agent apache2
 systemctl enable zabbix-server zabbix-agent apache2
 ```
 
------
+---
 
-\<a id="installation-grafana"\>\</a\>
-
+<a id="installation-grafana"></a>
 ## `📊`︲Installation de Grafana.
 
------
+---
 
 > [\!TIP]
 > Grafana permet de transformer vos données Zabbix en tableaux de bord dynamiques et esthétiques. L'installation via le dépôt officiel garantit les mises à jour de sécurité.
@@ -268,10 +266,9 @@ apt install grafana -y
 systemctl enable grafana-server --now
 ```
 
------
+---
 
-\<a id="plugin-zabbix-grafana"\>\</a\>
-
+<a id="plugin-zabbix-grafana"></a>
 ## `🔌`︲Ajout et configuration du plugin Zabbix.
 
 -----
