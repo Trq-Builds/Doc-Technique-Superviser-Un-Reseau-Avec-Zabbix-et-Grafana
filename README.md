@@ -362,11 +362,3 @@ Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
 
 ---
 
-### Analyse de second ordre :
-
-* **Risque identifié** : Si tu ne changes pas le `Hostname` dans le fichier `.conf` pour qu'il soit *identique* à celui créé dans l'interface Web, l'agent ne sera pas reconnu.
-* **Impact T+6 mois** : En documentant les captures d'écran maintenant, tu justifies de la validité de ton infrastructure lors de ton examen final.
-
-**PROCHAINE ACTION IMMÉDIATE**
-Copie ce bloc dans ton fichier MD. Une fois que c'est fait, effectue la configuration du **Setup Wizard** sur ton navigateur et dis-moi quand tu es logué en tant qu'**Admin**. On passera alors à l'action réelle sur le serveur FOG.
-
