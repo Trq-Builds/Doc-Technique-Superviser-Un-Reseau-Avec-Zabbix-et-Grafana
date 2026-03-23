@@ -321,9 +321,6 @@ Connecte-toi avec les identifiants par défaut : `Admin` / `zabbix`.
 
 ---
 
-### 2. Début Mission 3 : Supervision de FOG (Documentation)
-
-
 <a id="supervision-fog-zabbix"></a>
 # `🖥️`︲Supervision du serveur FOG avec Zabbix.
 
