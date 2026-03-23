@@ -292,7 +292,7 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` (identifiants par défaut : `admin` /
   * **Auth :** Renseigne ton login/pass Zabbix (Admin / zabbix par défaut).
   * **Enable :** N'oublie pas d'activer le plugin dans Grafana (Administration \> Plugins \> Zabbix \> Enable).
 
------
+---
 
 > [!TIP]
 > Ton infrastructure est maintenant prête. Les deux services communiquent.
@@ -310,8 +310,10 @@ Accède à l'interface via `http://172.16.X.10/zabbix`. L'assistant vérifie les
 * **Database connection** : Renseigne l'utilisateur `zabbix` et son mot de passe.
 * **Zabbix server details** : Donne un nom à ton serveur (ex: `Zabbix-Descartes`).
 
-> [!IMPORTANT]
-> **Capture d'écran n°1 :** L'étape "Check of pre-requisites" où tous les indicateurs sont au vert (OK).
+<details>
+  <summary>📸︲.</summary>
+  <img width="1543" height="862" alt="image" src="https://github.com/user-attachments/assets/44074d14-0870-4e7b-93d3-0cd98cd43a66" />
+</details>
 
 2️⃣︲**Premier Dashboard et vérification du statut**
 Connecte-toi avec les identifiants par défaut : `Admin` / `zabbix`.
