@@ -317,9 +317,6 @@ Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
 
 ---
 
-
----
-
 <img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43e03359-d481-4c08-86d9-95a2f8979a2b" />
