@@ -224,8 +224,6 @@ systemctl enable zabbix-server zabbix-agent apache2
 
 ---
 
-<a id="finalisation-zabbix-web"\>\</a\>
-
 ## `🌐`︲Finalisation via l'interface Web (Setup Wizard).
 
 1️⃣︲**Vérification des prérequis**
