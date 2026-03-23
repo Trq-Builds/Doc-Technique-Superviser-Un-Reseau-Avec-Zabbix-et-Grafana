@@ -229,7 +229,6 @@ systemctl enable zabbix-server zabbix-agent apache2
 1️⃣︲**Vérification des prérequis**
 Accès via `http://172.16.X.10/zabbix`. L'assistant vérifie la configuration PHP.
 
-> [\!IMPORTANT]
 <details>
   <summary><strong>📸︲Capture d'écran.</strong></summary>
   <img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
