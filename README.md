@@ -361,7 +361,118 @@ Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
 
 ---
 
+<a id="installation-zabbix"></a>
+## `🐧`︲Installation de Zabbix sur Debian 13 (Trixie).
+
+---
+
+> [!IMPORTANT]
+> **Note technique :** Pour Debian 13, nous utilisons la version Zabbix 7.0 LTS. L'installation nécessite une attention particulière sur les dépendances `libldap` et la configuration des fonctions MariaDB.
+
+1️⃣︲**Configuration du dépôt et installation**
+```bash
+# Téléchargement du paquet de configuration du dépôt Zabbix 7.0
+wget [https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_7.0-2+debian13_all.deb](https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_7.0-2+debian13_all.deb)
+dpkg -i zabbix-release_7.0-2+debian13_all.deb
+apt update
+
+# Installation des composants serveurs, web et SQL
+apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
+````
+
+2️⃣︲**Préparation de la base de données MariaDB**
+
+```sql
+-- Connexion en root
+mysql -u root
+
+-- Création de la base et de l'utilisateur
+CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER zabbix@localhost IDENTIFIED BY 'password_zabbix';
+GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;
+
+-- Autorisation pour l'importation du schéma (Crucial)
+SET GLOBAL log_bin_trust_function_creators = 1;
+QUIT;
+```
+
+3️⃣︲**Importation du schéma et finalisation**
+
+```bash
+# Importation des tables Zabbix
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
+
+# Liaison du mot de passe dans la configuration serveur
+sed -i 's/# DBPassword=/DBPassword=password_zabbix/' /etc/zabbix/zabbix_server.conf
+
+# Activation des services
+systemctl restart zabbix-server zabbix-agent apache2
+systemctl enable zabbix-server zabbix-agent apache2
+```
+
+---
+
+\<a id="finalisation-zabbix-web"\>\</a\>
+
+## `🌐`︲Finalisation via l'interface Web (Setup Wizard).
+
+1️⃣︲**Vérification des prérequis**
+Accès via `http://172.16.X.10/zabbix`. L'assistant vérifie la configuration PHP.
+
+> [\!IMPORTANT]
+> **Capture d'écran n°1 :** Fenêtre "Check of pre-requisites" affichant "OK" pour toutes les lignes.
+
+2️⃣︲**Connexion à la base de données**
+
+  * **User :** `zabbix`
+  * **Password :** `password_zabbix`
+
+3️⃣︲**Validation du tableau de bord**
+Connexion avec `Admin` / `zabbix`.
+
+> [\!IMPORTANT]
+> **Capture d'écran n°2 :** Dashboard Zabbix avec le widget "System Information" indiquant "Zabbix server is running: Yes".
+
+-----
+
+\<a id="installation-grafana"\>\</a\>
+
+## `📊`︲Installation et interconnexion de Grafana.
+
+-----
+
+1️⃣︲**Installation du service**
+
+```bash
+# Ajout de la clé GPG et du dépôt officiel
+mkdir -p /etc/apt/keyrings
+curl [https://apt.grafana.com/gpg.key](https://apt.grafana.com/gpg.key) | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] [https://apt.grafana.com](https://apt.grafana.com) stable main" | tee /etc/apt/sources.list.d/grafana.list
+
+# Installation et démarrage
+apt update && apt install grafana -y
+systemctl enable grafana-server --now
+```
+
+2️⃣︲**Configuration du Plugin Zabbix**
+
+  * Installation : `grafana-cli plugins install alexanderzobnin-zabbix-app`
+  * Redémarrage : `systemctl restart grafana-server`
+
+3️⃣︲**Liaison Data Source**
+Dans Grafana (`port 3000`), ajout de la source Zabbix :
+
+  * **URL :** `http://localhost/zabbix/api_jsonrpc.php`
+  * **Identifiants API :** `Admin` / `zabbix`
+
+> [\!IMPORTANT]
+> **Capture d'écran n°3 :** Message de succès "Data source is working" après le clic sur "Save & Test".
+
+---
 <img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43e03359-d481-4c08-86d9-95a2f8979a2b" />
+
 
 
 Vrac : MDPs : Username : Admin (Majuscule importante)
