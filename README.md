@@ -174,194 +174,6 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 -----
 
 <a id="installation-zabbix"></a>
-## `🐧`︲Installation de Zabbix sur Debian 13.
-
-> [\!IMPORTANT]
-> **Prérequis Base de données :** Nous utiliserons **MariaDB**. Assure-toi que le service est installé et actif avant de lancer le script de schéma Zabbix.
-
-## `🐬`︲Installation et configuration de MariaDB.
-
-> [!NOTE]
-> **Prérequis :** La mise en place de Zabbix nécessite une base de données relationnelle fonctionnelle (Étape C de la documentation officielle).
-
-#### 1.1. Installation du service
-
-Le serveur de base de données est installé sur la machine **srv-zabbix**.
-
-```bash
-# Mise à jour des dépôts et installation de MariaDB
-apt update && apt install mariadb-server -y
-systemctl enable --now mariadb
-```
-
----
-
-1️⃣︲**Ajout du dépôt officiel Zabbix (Debian 13)** On récupère la configuration spécifique pour Debian 13 (Trixie) pour éviter les conflits de dépendances :
-
-```bash
-# Téléchargement et installation du paquet de configuration du dépôt
-wget https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_7.0-2+debian13_all.deb
-dpkg -i zabbix-release_7.0-2+debian13_all.deb
-apt update
-```
-
-2️⃣︲**Installation du serveur, du frontend et de l'agent**
-
-```bash
-apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
-```
-
-3️⃣︲**Initialisation de la base de données**
-Connecte-toi à MariaDB pour créer l'utilisateur et la base de données dédiée :
-
-```sql
-mysql -u root
--- Dans la console MariaDB :
-create database zabbix character set utf8mb4 collate utf8mb4_bin;
-create user zabbix@localhost identified by 'password_zabbix';
-grant all privileges on zabbix.* to zabbix@localhost;
-set global log_bin_trust_function_creators = 1;
-quit;
-```
-
-4️⃣︲**Importation du schéma initial**
-Cette commande structure la base de données avec les tables nécessaires au fonctionnement de Zabbix :
-
-```bash
-zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
-```
-
-5️⃣︲**Configuration et démarrage du serveur**
-Édite le fichier `/etc/zabbix/zabbix_server.conf` pour renseigner `DBPassword=password_zabbix`, puis redémarre les services :
-
-```bash
-systemctl restart zabbix-server zabbix-agent apache2
-systemctl enable zabbix-server zabbix-agent apache2
-```
-
----
-
-<a id="installation-grafana"></a>
-## `📊`︲Installation de Grafana.
-
----
-
-> [\!TIP]
-> Grafana permet de transformer vos données Zabbix en tableaux de bord dynamiques et esthétiques. L'installation via le dépôt officiel garantit les mises à jour de sécurité.
-
-1️⃣︲**Installation des dépendances et du dépôt**
-
-```bash
-apt install -y apt-transport-https software-properties-common wget
-mkdir -p /etc/apt/keyrings/
-wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | tee /etc/apt/sources.list.d/grafana.list
-apt update
-```
-
-2️⃣︲**Installation et démarrage du service**
-
-```bash
-apt install grafana -y
-systemctl enable grafana-server --now
-```
-
----
-
-<a id="plugin-zabbix-grafana"></a>
-## `🔌`︲Ajout et configuration du plugin Zabbix.
-
------
-
-> [\!IMPORTANT]
-> Pour que Grafana puisse "parler" à Zabbix, nous devons utiliser l'API de Zabbix via un plugin dédié.
-
-1️⃣︲**Installation du plugin en ligne de commande**
-
-```bash
-grafana-cli plugins install alexanderzobnin-zabbix-app
-systemctl restart grafana-server
-```
-
-2️⃣︲**Configuration de la Data Source (Interface Web)**
-Rendez-vous sur `http://<IP_SERVEUR>:3000` (identifiants par défaut : `admin` / `admin`) :
-
-  * **Menu :** `Connections` \> `Data Sources` \> `Add data source`.
-  * **Type :** Rechercher `Zabbix`.
-  * **URL :** `http://localhost/zabbix/api_jsonrpc.php`
-  * **Auth :** Renseigne ton login/pass Zabbix (Admin / zabbix par défaut).
-  * **Enable :** N'oublie pas d'activer le plugin dans Grafana (Administration \> Plugins \> Zabbix \> Enable).
-
----
-
-> [!TIP]
-> Ton infrastructure est maintenant prête. Les deux services communiquent.
-
----
-
-<a id="finalisation-zabbix-web"></a>
-## `🌐`︲Finalisation de la configuration via l'interface Web.
-
-> [!IMPORTANT]
-> Avant de commencer, assure-toi que le serveur Zabbix est lié à la base de données en éditant le fichier `/etc/zabbix/zabbix_server.conf` avec le paramètre `DBPassword=password_zabbix`.
-
-1️⃣︲**Assistant d'installation (Setup Wizard)**
-Accède à l'interface via `http://172.16.X.10/zabbix`. L'assistant vérifie les prérequis PHP.
-* **Database connection** : Renseigne l'utilisateur `zabbix` et son mot de passe.
-* **Zabbix server details** : Donne un nom à ton serveur (ex: `Zabbix-Descartes`).
-
-<details>
-  <summary>📸︲.</summary>
-  <img width="1543" height="862" alt="image" src="https://github.com/user-attachments/assets/44074d14-0870-4e7b-93d3-0cd98cd43a66" />
-</details>
-
-2️⃣︲**Premier Dashboard et vérification du statut**
-Connecte-toi avec les identifiants par défaut : `Admin` / `zabbix`.
-
-> [!IMPORTANT]
-> **Capture d'écran n°2 :** Le Widget "System information" sur le tableau de bord principal montrant que "Zabbix server is running" est à "Yes".
-
----
-
-<a id="supervision-fog-zabbix"></a>
-# `🖥️`︲Supervision du serveur FOG avec Zabbix.
-
----
-
-<a id="installation-agent-fog"></a>
-## `📦`︲Installation de l’agent Zabbix sur le serveur FOG.
-
----
-
-> [!NOTE]
-> Le serveur FOG étant une machine Debian, nous utilisons l'agent Zabbix classique pour faire remonter les métriques système (CPU, RAM, Disque).
-
-1️⃣︲**Installation du paquet**
-Sur la console du serveur FOG :
-```bash
-apt update && apt install zabbix-agent -y
-```
-
-2️⃣︲**Configuration du fichier agent**
-Modification du fichier `/etc/zabbix/zabbix_agentd.conf` pour autoriser la connexion depuis le serveur de supervision :
-* `Server=172.16.X.10`
-* `Hostname=srv-fog`
-
-```bash
-systemctl restart zabbix-agent
-systemctl enable zabbix-agent
-```
-
-3️⃣︲**Déclaration de l'Hôte dans Zabbix**
-Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
-* **Template utilisé** : `Linux by Zabbix agent`.
-
-> [!IMPORTANT]
-> **Capture d'écran n°3 :** La liste des hôtes montrant `srv-fog` avec l'icône **ZBX** allumée en vert.
-
----
-
-<a id="installation-zabbix"></a>
 ## `🐧`︲Installation de Zabbix sur Debian 13 (Trixie).
 
 ---
@@ -412,7 +224,7 @@ systemctl enable zabbix-server zabbix-agent apache2
 
 ---
 
-\<a id="finalisation-zabbix-web"\>\</a\>
+<a id="finalisation-zabbix-web"\>\</a\>
 
 ## `🌐`︲Finalisation via l'interface Web (Setup Wizard).
 
@@ -435,8 +247,7 @@ Connexion avec `Admin` / `zabbix`.
 
 -----
 
-\<a id="installation-grafana"\>\</a\>
-
+<a id="installation-grafana"></a>
 ## `📊`︲Installation et interconnexion de Grafana.
 
 -----
@@ -469,6 +280,48 @@ Dans Grafana (`port 3000`), ajout de la source Zabbix :
 > **Capture d'écran n°3 :** Message de succès "Data source is working" après le clic sur "Save & Test".
 
 ---
+
+<a id="supervision-fog-zabbix"></a>
+# `🖥️`︲Supervision du serveur FOG avec Zabbix.
+
+---
+
+<a id="installation-agent-fog"></a>
+## `📦`︲Installation de l’agent Zabbix sur le serveur FOG.
+
+---
+
+> [!NOTE]
+> Le serveur FOG étant une machine Debian, nous utilisons l'agent Zabbix classique pour faire remonter les métriques système (CPU, RAM, Disque).
+
+1️⃣︲**Installation du paquet**
+Sur la console du serveur FOG :
+```bash
+apt update && apt install zabbix-agent -y
+```
+
+2️⃣︲**Configuration du fichier agent**
+Modification du fichier `/etc/zabbix/zabbix_agentd.conf` pour autoriser la connexion depuis le serveur de supervision :
+* `Server=172.16.X.10`
+* `Hostname=srv-fog`
+
+```bash
+systemctl restart zabbix-agent
+systemctl enable zabbix-agent
+```
+
+3️⃣︲**Déclaration de l'Hôte dans Zabbix**
+Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
+* **Template utilisé** : `Linux by Zabbix agent`.
+
+> [!IMPORTANT]
+> **Capture d'écran n°3 :** La liste des hôtes montrant `srv-fog` avec l'icône **ZBX** allumée en vert.
+
+---
+
+
+---
+
 <img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43e03359-d481-4c08-86d9-95a2f8979a2b" />
