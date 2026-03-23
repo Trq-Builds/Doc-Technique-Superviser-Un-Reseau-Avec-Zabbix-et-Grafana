@@ -299,6 +299,32 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` (identifiants par défaut : `admin` /
 
 ---
 
+<a id="finalisation-zabbix-web"></a>
+## `🌐`︲Finalisation de la configuration via l'interface Web.
+
+> [!IMPORTANT]
+> Avant de commencer, assure-toi que le serveur Zabbix est lié à la base de données en éditant le fichier `/etc/zabbix/zabbix_server.conf` avec le paramètre `DBPassword=password_zabbix`.
+
+1️⃣︲**Assistant d'installation (Setup Wizard)**
+Accède à l'interface via `http://172.16.X.10/zabbix`. L'assistant vérifie les prérequis PHP.
+* **Database connection** : Renseigne l'utilisateur `zabbix` et son mot de passe.
+* **Zabbix server details** : Donne un nom à ton serveur (ex: `Zabbix-Descartes`).
+
+> [!IMPORTANT]
+> **Capture d'écran n°1 :** L'étape "Check of pre-requisites" où tous les indicateurs sont au vert (OK).
+
+2️⃣︲**Premier Dashboard et vérification du statut**
+Connecte-toi avec les identifiants par défaut : `Admin` / `zabbix`.
+
+> [!IMPORTANT]
+> **Capture d'écran n°2 :** Le Widget "System information" sur le tableau de bord principal montrant que "Zabbix server is running" est à "Yes".
+```
+
+---
+
+### 2. Début Mission 3 : Supervision de FOG (Documentation)
+
+
 <a id="supervision-fog-zabbix"></a>
 # `🖥️`︲Supervision du serveur FOG avec Zabbix.
 
@@ -308,4 +334,40 @@ Rendez-vous sur `http://<IP_SERVEUR>:3000` (identifiants par défaut : `admin` /
 ## `📦`︲Installation de l’agent Zabbix sur le serveur FOG.
 
 ---
+
+> [!NOTE]
+> Le serveur FOG étant une machine Debian, nous utilisons l'agent Zabbix classique pour faire remonter les métriques système (CPU, RAM, Disque).
+
+1️⃣︲**Installation du paquet**
+Sur la console du serveur FOG :
+```bash
+apt update && apt install zabbix-agent -y
+```
+
+2️⃣︲**Configuration du fichier agent**
+Modification du fichier `/etc/zabbix/zabbix_agentd.conf` pour autoriser la connexion depuis le serveur de supervision :
+* `Server=172.16.X.10`
+* `Hostname=srv-fog`
+
+```bash
+systemctl restart zabbix-agent
+systemctl enable zabbix-agent
+```
+
+3️⃣︲**Déclaration de l'Hôte dans Zabbix**
+Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
+* **Template utilisé** : `Linux by Zabbix agent`.
+
+> [!IMPORTANT]
+> **Capture d'écran n°3 :** La liste des hôtes montrant `srv-fog` avec l'icône **ZBX** allumée en vert.
+```
+
+---
+
+### Analyse de second ordre :
+* **Risque identifié** : Si tu ne changes pas le `Hostname` dans le fichier `.conf` pour qu'il soit *identique* à celui créé dans l'interface Web, l'agent ne sera pas reconnu.
+* **Impact T+6 mois** : En documentant les captures d'écran maintenant, tu justifies de la validité de ton infrastructure lors de ton examen final.
+
+**PROCHAINE ACTION IMMÉDIATE**
+Copie ce bloc dans ton fichier MD. Une fois que c'est fait, effectue la configuration du **Setup Wizard** sur ton navigateur et dis-moi quand tu es logué en tant qu'**Admin**. On passera alors à l'action réelle sur le serveur FOG.
 
