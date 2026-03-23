@@ -230,7 +230,7 @@ systemctl enable zabbix-server zabbix-agent apache2
 Accès via `http://172.16.X.10/zabbix`. L'assistant vérifie la configuration PHP.
 
 > [\!IMPORTANT]
-> **Capture d'écran n°1 :** Fenêtre "Check of pre-requisites" affichant "OK" pour toutes les lignes.
+> <img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
 
 2️⃣︲**Connexion à la base de données**
 
@@ -316,7 +316,5 @@ Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
 > **Capture d'écran n°3 :** La liste des hôtes montrant `srv-fog` avec l'icône **ZBX** allumée en vert.
 
 ---
-
-<img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43e03359-d481-4c08-86d9-95a2f8979a2b" />
