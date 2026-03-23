@@ -289,35 +289,67 @@ Dans Grafana (`port 3000`), ajout de la source Zabbix :
 
 ---
 
-<a id="installation-agent-fog"></a>
-## `📦`︲Installation de l’agent Zabbix sur le serveur FOG.
+> [!NOTE]
+> L'objectif de cette mission est de déployer un agent de supervision sur le serveur FOG (Debian) afin de collecter les métriques de performance (CPU, RAM, Entrées/Sorties disque) et l'état des services critiques.
 
 ---
 
-> [!NOTE]
-> Le serveur FOG étant une machine Debian, nous utilisons l'agent Zabbix classique pour faire remonter les métriques système (CPU, RAM, Disque).
+<a id="installation-agent-fog"></a>
+## `📦`︲1. Installation de l’agent Zabbix.
 
-1️⃣︲**Installation du paquet**
-Sur la console du serveur FOG :
+L'agent Zabbix est installé directement sur le serveur cible (**srv-fog**) via les dépôts officiels.
+
 ```bash
+# Mise à jour des dépôts et installation du paquet agent
 apt update && apt install zabbix-agent -y
+````
+
+---
+
+
+## `⚙️`︲2. Configuration du fichier zabbix\_agentd.conf.
+
+Pour permettre la communication avec le serveur de supervision, le fichier de configuration de l'agent doit être modifié. Les directives suivantes assurent que l'agent accepte les requêtes provenant de **srv-zabbix** et s'identifie correctement.
+
+```bash
+# Édition du fichier de configuration
+nano /etc/zabbix/zabbix_agentd.conf
 ```
 
-2️⃣︲**Configuration du fichier agent**
-Modification du fichier `/etc/zabbix/zabbix_agentd.conf` pour autoriser la connexion depuis le serveur de supervision :
-* `Server=172.16.X.10`
-* `Hostname=srv-fog`
+**Modifications apportées :**
+
+  * `Server=172.16.X.10` : Autorise le serveur Zabbix à interroger cet agent.
+  * `ServerActive=172.16.X.10` : Définit le serveur pour les vérifications actives.
+  * `Hostname=srv-fog` : Nom d'hôte unique utilisé pour l'appairage dans l'interface Web.
+
+<!-- end list -->
 
 ```bash
+# Redémarrage et activation du service au démarrage
 systemctl restart zabbix-agent
 systemctl enable zabbix-agent
 ```
 
-3️⃣︲**Déclaration de l'Hôte dans Zabbix**
-Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
-* **Template utilisé** : `Linux by Zabbix agent`.
+---
 
-> [!IMPORTANT]
-> **Capture d'écran n°3 :** La liste des hôtes montrant `srv-fog` avec l'icône **ZBX** allumée en vert.
+## `➕`︲3. Déclaration de l’hôte dans Zabbix.
+
+L'hôte doit être enregistré manuellement dans le serveur de supervision pour que les données soient traitées.
+
+1.  **Navigation** : Data collection \> Hosts \> Create host.
+2.  **Configuration technique** :
+      * **Host name** : `srv-fog` (doit correspondre au Hostname du fichier .conf).
+      * **Templates** : `Linux by Zabbix agent`.
+      * **Host groups** : `Linux servers`.
+      * **Interfaces** : `Agent` | IP : `172.16.X.2` | Port : `10050`.
+
+---
+
+## `🧪`︲4. Vérification du statut de supervision.
+
+La validation finale s'effectue dans l'onglet **Hosts**. Après quelques secondes, la disponibilité de l'hôte est confirmée par le passage au vert de l'indicateur de protocole.
+
+> [\!IMPORTANT]
+> **Capture d'écran n°4 :** Liste des hôtes dans Zabbix montrant l'hôte `srv-fog` avec l'icône **ZBX** allumée en vert, confirmant la communication bidirectionnelle.
 
 ---
