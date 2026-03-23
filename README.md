@@ -318,7 +318,6 @@ Connecte-toi avec les identifiants par défaut : `Admin` / `zabbix`.
 
 > [!IMPORTANT]
 > **Capture d'écran n°2 :** Le Widget "System information" sur le tableau de bord principal montrant que "Zabbix server is running" est à "Yes".
-```
 
 ---
 
