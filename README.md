@@ -363,3 +363,8 @@ Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
 
 <img width="1346" height="816" alt="image" src="https://github.com/user-attachments/assets/a5b1885d-b70b-4fd2-9e74-503d54828c48" />
 
+
+Vrac : MDPs : Username : Admin (Majuscule importante)
+
+Password : zabbix
+
