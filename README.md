@@ -242,8 +242,11 @@ Accès via `http://172.16.X.10/zabbix`. L'assistant vérifie la configuration PH
 3️⃣︲**Validation du tableau de bord**
 Connexion avec `Admin` / `zabbix`.
 
-> [\!IMPORTANT]
-> **Capture d'écran n°2 :** Dashboard Zabbix avec le widget "System Information" indiquant "Zabbix server is running: Yes".
+<details>
+  <summary><strong>📸︲Capture d'écran.</strong></summary>
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43e03359-d481-4c08-86d9-95a2f8979a2b" />
+</details>
+
 
 -----
 
@@ -318,5 +321,3 @@ Dans l'interface Web : **Data collection** > **Hosts** > **Create host**.
 > **Capture d'écran n°3 :** La liste des hôtes montrant `srv-fog` avec l'icône **ZBX** allumée en vert.
 
 ---
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43e03359-d481-4c08-86d9-95a2f8979a2b" />
