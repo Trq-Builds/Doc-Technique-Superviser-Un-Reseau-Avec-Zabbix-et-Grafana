@@ -361,3 +361,14 @@ La validation finale s'effectue dans l'onglet **Hosts**. Après quelques seconde
 
 <img width="1786" height="1053" alt="image" src="https://github.com/user-attachments/assets/678142f8-64f1-45ee-8e67-354929873e83" />
 
+
+
+
+Template de Panel en JSON fournie : 
+
+
+
+
+```json
+
+```
