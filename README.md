@@ -353,3 +353,7 @@ La validation finale s'effectue dans l'onglet **Hosts**. Après quelques seconde
 > **Capture d'écran n°4 :** Liste des hôtes dans Zabbix montrant l'hôte `srv-fog` avec l'icône **ZBX** allumée en vert, confirmant la communication bidirectionnelle.
 
 ---
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c2378cf9-583d-463f-b8bf-8d043859016b" />
+
