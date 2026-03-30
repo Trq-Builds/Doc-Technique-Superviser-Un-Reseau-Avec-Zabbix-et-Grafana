@@ -355,3 +355,81 @@ La validation finale s'effectue dans l'onglet **Hosts**. Après quelques seconde
 
 <a id="supervision-fog-grafana"></a>
 # `📊`︲Supervision du serveur FOG avec Grafana.
+
+-----
+
+> [\!NOTE]
+> La source de données Zabbix étant configurée, l'objectif est d'exploiter les métriques collectées sur srv-fog au travers d'interfaces visuelles dynamiques et exploitables.
+
+-----
+
+## `⬇️`︲1. Importation du dashboard "Zabbix Full Server Status".
+
+L'utilisation de tableaux de bord préconfigurés optimise le temps de déploiement. Le plugin Zabbix pour Grafana inclut des modèles standards éprouvés.
+
+1.  **Navigation :** Dashboards \> Import.
+2.  **ID du Dashboard :** Saisir l'identifiant `5363` (Zabbix - Full Server Status) fourni par la communauté, ou importer le fichier JSON natif du plugin Zabbix.
+3.  **Configuration :**
+      * **Name :** Zabbix - srv-fog Status.
+      * **Zabbix\_Datasource :** Sélectionner la source de données Zabbix précédemment instanciée.
+4.  **Validation :** Cliquer sur *Import*.
+
+-----
+
+\<a id="personnalisation-panels"\>\</a\>
+
+## `🧩`︲2. Personnalisation des panels.
+
+Le dashboard importé est générique. Un filtrage strict est requis pour cibler exclusivement srv-fog et éviter la pollution visuelle.
+
+### P0 : Configuration des Variables de Tri
+
+Dans les paramètres du dashboard (icône engrenage ⚙️) \> Variables :
+
+  * `Group` : Définir la requête sur `Linux servers`.
+  * `Host` : Définir la requête sur `srv-fog`.
+
+### P1 : Ajustement des Métriques (Query)
+
+Pour chaque panel critique (CPU, RAM, I/O Disque), la syntaxe de la requête Zabbix doit être alignée :
+
+| Champ Grafana | Valeur Requise |
+| :--- | :--- |
+| **Group** | `$group` |
+| **Host** | `$host` |
+| **Application** | Vide (ou spécifique au besoin) |
+| **Item** | Élément précis (ex: `CPU utilization`) |
+
+-----
+
+## `🔐`︲3. Supervision du service SSH.
+
+La surveillance de la disponibilité des processus critiques requiert une approche binaire (Up/Down). Le service SSH est audité via un check TCP natif.
+
+### P1 : Vérification côté Zabbix (Prérequis)
+
+S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bien la clé d'item standard.
+
+  * **Clé cible :** `net.tcp.service[ssh]`
+  * **Type de retour attendu :** Numérique (0 ou 1).
+
+### P2 : Création du Panel Stat dans Grafana
+
+1.  **Création :** Cliquer sur *Add panel* en haut du dashboard.
+2.  **Source de données :** Zabbix.
+3.  **Paramétrage de la Query :**
+      * Group : `Linux servers`
+      * Host : `srv-fog`
+      * Item : Saisir ou sélectionner `SSH Service Status` (lié à `net.tcp.service[ssh]`).
+4.  **Configuration Visuelle (Panneau de droite) :**
+      * Type de visualisation : **Stat**.
+      * **Value mappings (Mappage des valeurs) :** Règle de décision logique.
+          * Condition `1` -\> Texte : `Actif` -\> Couleur : `Vert`.
+          * Condition `0` -\> Texte : `Inactif (CRITIQUE)` -\> Couleur : `Rouge`.
+
+-----
+
+**PROCHAINE ACTION IMMÉDIATE**
+Connectez-vous à l'interface web de Grafana, rendez-vous dans la section "Dashboards \> Import" et saisissez l'ID `5363` pour instancier la base de votre supervision.
+
+
