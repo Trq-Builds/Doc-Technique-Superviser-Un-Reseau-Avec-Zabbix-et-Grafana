@@ -349,8 +349,11 @@ L'hôte doit être enregistré manuellement dans le serveur de supervision pour 
 
 La validation finale s'effectue dans l'onglet **Hosts**. Après quelques secondes, la disponibilité de l'hôte est confirmée par le passage au vert de l'indicateur de protocole.
 
-> [\!IMPORTANT]
-> **Capture d'écran n°4 :** Liste des hôtes dans Zabbix montrant l'hôte `srv-fog` avec l'icône **ZBX** allumée en vert, confirmant la communication bidirectionnelle.
+<details>
+  <summary><strong>📸︲Capture d'écran.</strong></summary>
+  <img width="1782" height="1057" alt="image" src="https://github.com/user-attachments/assets/2253cbf2-fca5-41f6-946a-61584c2942e5" />
+</details>
+
 
 ---
 
