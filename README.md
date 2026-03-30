@@ -279,9 +279,6 @@ Dans Grafana (`port 3000`), ajout de la source Zabbix :
   * **URL :** `http://localhost/zabbix/api_jsonrpc.php`
   * **Identifiants API :** `Admin` / `zabbix`
 
-> [\!IMPORTANT]
-> **Capture d'écran n°3 :** Message de succès "Data source is working" après le clic sur "Save & Test".
-
 ---
 
 <a id="supervision-fog-zabbix"></a>
