@@ -429,7 +429,3 @@ S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bi
 
 -----
 
-**PROCHAINE ACTION IMMÉDIATE**
-Connectez-vous à l'interface web de Grafana, rendez-vous dans la section "Dashboards \> Import" et saisissez l'ID `5363` pour instancier la base de votre supervision.
-
-
