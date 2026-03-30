@@ -435,5 +435,83 @@ S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bi
 
 -----
 
+> [\!NOTE]
+> La supervision d'un SGBD nécessite des métriques spécifiques (requêtes par seconde, connexions actives, threads) au-delà de la simple disponibilité du processus. MariaDB étant un fork de MySQL, les outils natifs Zabbix pour MySQL sont pleinement compatibles. L'objectif est d'anticiper la saturation des connexions (dette technique fréquente à T+6 mois sur les environnements FOG très sollicités).
 
+-----
+
+## `🔗`︲1. Ajout du template MySQL by Zabbix Agent.
+
+Pour que l'agent Zabbix puisse interroger MariaDB de manière sécurisée, la création d'un compte avec des privilèges de lecture stricts est requise sur l'instance cible (`srv-fog`).
+
+### P0 : Création de l'utilisateur de monitoring (Sur srv-fog)
+
+Ouvrez la console MariaDB et exécutez le flux logique suivant :
+
+```sql
+CREATE USER 'zbx_monitor'@'localhost' IDENTIFIED BY 'password_fort_zbx';
+GRANT REPLICATION CLIENT, PROCESS, SHOW DATABASES, SHOW VIEW ON *.* TO 'zbx_monitor'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+### P1 : Configuration de l'agent (Sur srv-fog)
+
+Création d'un fichier de configuration caché pour authentifier l'agent sans exposer les identifiants en clair dans les processus système.
+
+```bash
+mkdir -p /var/lib/zabbix
+cat <<EOF > /var/lib/zabbix/.my.cnf
+[client]
+user=zbx_monitor
+password=password_fort_zbx
+EOF
+```
+
+### P2 : Liaison dans Zabbix (Interface Web)
+
+1.  **Navigation :** Data collection \> Hosts \> Sélectionner `srv-fog`.
+2.  **Templates :** Dans le champ de recherche, ajouter `MySQL by Zabbix agent`.
+3.  **Mise à jour :** Cliquer sur *Update*. Les items de collecte démarrent automatiquement.
+
+-----
+
+## `📈`︲2. Importation du dashboard MySQL dans Grafana.
+
+L'exploitation des données SGBD requiert un affichage temporel adapté aux variations de charge.
+
+1.  **Navigation :** Dashboards \> Import.
+2.  **ID du Dashboard :** Utiliser l'ID communautaire optimisé `14963` (ou un ID spécifique au plugin Zabbix récent).
+3.  **Configuration :**
+      * **Name :** Zabbix - srv-fog MariaDB.
+      * **Folder :** (Sélectionner votre dossier de supervision).
+      * **Zabbix\_Datasource :** Sélectionner la source de données configurée précédemment.
+4.  **Validation :** Cliquer sur *Import*.
+
+-----
+
+## `⚙️`︲3. Adaptation des panels.
+
+Le tableau de bord importé contient des panels génériques. Une épuration est nécessaire pour isoler le signal du bruit.
+
+### P1 : Paramétrage des Variables
+
+Dans les paramètres du dashboard (icône ⚙️) \> Variables :
+
+  * Aligner la requête pour que l'application pointe strictement sur `MySQL`.
+  * Figer la variable `Host` sur `srv-fog`.
+
+### P2 : Tableau de Décision des Métriques (Ajustement Zabbix API)
+
+Vérifiez l'alignement des items critiques dans l'éditeur de panel. En cas de "No data", la requête Zabbix doit correspondre à ces clés :
+
+| Panel Cible | Item Zabbix Cible | Seuil d'Action Requis |
+| :--- | :--- | :--- |
+| **MySQL Uptime / Status** | `MySQL: Status` ou `mysql.ping` | 0 (Down) = Intervention immédiate. |
+| **Connections actives** | `MySQL: Threads connected` | Si approche du `max_connections`, ajustement du `my.cnf` nécessaire. |
+| **Slow Queries** | `MySQL: Slow queries` | Si \> 0 continu, indexation des tables FOG requise. |
+| **Trafic Réseau SQL** | `MySQL: Bytes received / sent` | Identification des goulots d'étranglement lors du multicast FOG. |
+
+-----
+
+Connectez-vous en SSH sur `srv-fog`, lancez `mysql -u root -p`, et exécutez les trois requêtes SQL listées en P0 pour créer l'utilisateur `zbx_monitor`.
 
