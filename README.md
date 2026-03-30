@@ -3,7 +3,7 @@
 ---
 
 <p align="center">
-  
+
 ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
 ![Zabbix](https://img.shields.io/badge/Zabbix-6.0%20LTS-CC0000?style=for-the-badge&logo=zabbix&logoColor=white)
 ![Grafana](https://img.shields.io/badge/Grafana-9.4-F46800?style=for-the-badge&logo=grafana&logoColor=white)
