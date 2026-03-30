@@ -376,8 +376,10 @@ L'utilisation de tableaux de bord préconfigurés optimise le temps de déploiem
 
 -----
 
+<a id="personnalisation-panels"></a>
 ## `🧩`︲2. Personnalisation des panels.
 
+(Le Dashbord est disponible dans le repos au format JSON)
 Le dashboard importé est générique. Un filtrage strict est requis pour cibler exclusivement srv-fog et éviter la pollution visuelle.
 
 ### P0 : Configuration des Variables de Tri
