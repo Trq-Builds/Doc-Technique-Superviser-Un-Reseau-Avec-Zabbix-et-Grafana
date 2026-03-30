@@ -430,3 +430,10 @@ S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bi
 
 -----
 
+<a id="supervision-mariadb"></a>
+# `🗄️`︲Supervision du service MariaDB.
+
+-----
+
+
+
