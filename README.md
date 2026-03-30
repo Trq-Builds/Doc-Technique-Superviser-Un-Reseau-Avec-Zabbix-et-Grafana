@@ -402,6 +402,7 @@ Pour chaque panel critique (CPU, RAM, I/O Disque), la syntaxe de la requête Zab
 
 -----
 
+<a id="supervision-ssh"></a>
 ## `🔐`︲3. Supervision du service SSH.
 
 La surveillance de la disponibilité des processus critiques requiert une approche binaire (Up/Down). Le service SSH est audité via un check TCP natif.
