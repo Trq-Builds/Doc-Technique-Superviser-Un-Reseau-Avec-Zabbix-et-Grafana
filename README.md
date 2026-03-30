@@ -352,3 +352,6 @@ La validation finale s'effectue dans l'onglet **Hosts**. Après quelques seconde
 </details>
 
 ---
+
+<a id="supervision-fog-grafana"></a>
+# `📊`︲Supervision du serveur FOG avec Grafana.
