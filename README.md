@@ -163,7 +163,7 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > - ` 🐬 `︲**MariaDB :** Système de gestion de base de données (MySQL) ︲[`🌐`](https://mariadb.org/)
 > - ` 🐧 `︲**Debian 13 :** OS pour srv-zabbix ︲[`🌐`](https://www.debian.org/)
 > - ` 🪟 `︲**Windows Server 2025 :** OS pour srv-ad1 ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022)
-> - ` 🔌 `︲**Cisco 2960 :** Matériel actif réseau (Switch) ︲[`🌐`](https://www.cisco.com/)
+> - ` 🔌 `︲~~**Cisco 2960 :** Matériel actif réseau (Switch)~~︲[`🌐`](https://www.cisco.com/)
 > - ` 📦 `︲**Virtualisation :** VMware ︲[`🌐`](https://www.vmware.com/)
 
 ---
