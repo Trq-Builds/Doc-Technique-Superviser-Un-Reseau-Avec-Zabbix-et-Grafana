@@ -1,21 +1,30 @@
 # `📈`︲Doc-Technique-Superviser un réseau avec Zabbix et Grafana.
 
+---
+
 <p align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
-![Type](https://img.shields.io/badge/Type-Documentation-3498db?style=for-the-badge)
+<img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Type-Documentation-3498db?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Level-Advanced-e74c3c?style=for-the-badge" />
 
 <br>
 
-![Zabbix](https://img.shields.io/badge/Zabbix-6.0%20LTS-CC0000?style=for-the-badge&logo=zabbix&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-9.4-F46800?style=for-the-badge&logo=grafana&logoColor=white)
-![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04%20LTS-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
+<img src="https://img.shields.io/badge/Zabbix-6.0%20LTS-CC0000?style=for-the-badge&logo=zabbix&logoColor=white" />
+<img src="https://img.shields.io/badge/Grafana-9.4-F46800?style=for-the-badge&logo=grafana&logoColor=white" />
+<img src="https://img.shields.io/badge/Ubuntu-22.04%20LTS-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" />
 
-<br>
-
-![Database](https://img.shields.io/badge/Database-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+<img src="https://img.shields.io/badge/Database-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
 
 </p>
+
+---
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/e3c462a7-1e55-41d8-bd81-6d21167f4a98" width="100"/>
+</p>
+
+---
 
 Ce dépôt présente un guide complet pour la mise en place d’une infrastructure de supervision réseau avec Zabbix et Grafana sous Debian 13. Il couvre l’installation, la configuration et l’intégration des différents outils de monitoring. Tu y apprendras à déployer le serveur Zabbix, à connecter Grafana pour la visualisation des métriques, et à superviser efficacement des serveurs Linux, Windows ainsi que des équipements réseau grâce au protocole SNMP.
 
