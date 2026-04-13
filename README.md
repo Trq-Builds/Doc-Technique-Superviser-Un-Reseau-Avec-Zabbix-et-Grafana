@@ -522,7 +522,7 @@ Vérifiez l'alignement des items critiques dans l'éditeur de panel. En cas de "
 | **Slow Queries** | `MySQL: Slow queries` | Si \> 0 continu, indexation des tables FOG requise. |
 | **Trafic Réseau SQL** | `MySQL: Bytes received / sent` | Identification des goulots d'étranglement lors du multicast FOG. |
 
------
+---
 
 Connectez-vous en SSH sur `srv-fog`, lancez `mysql -u root -p`, et exécutez les trois requêtes SQL listées en P0 pour créer l'utilisateur `zbx_monitor`.
 
