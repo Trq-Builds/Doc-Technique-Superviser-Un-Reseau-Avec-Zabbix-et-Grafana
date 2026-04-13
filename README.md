@@ -515,3 +515,5 @@ Vérifiez l'alignement des items critiques dans l'éditeur de panel. En cas de "
 
 Connectez-vous en SSH sur `srv-fog`, lancez `mysql -u root -p`, et exécutez les trois requêtes SQL listées en P0 pour créer l'utilisateur `zbx_monitor`.
 
+---
+
