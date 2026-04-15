@@ -1,4 +1,4 @@
-# `📈`︲Doc-Technique-Superviser un réseau avec Zabbix et Grafana.
+# `📈`︲`📊` Doc-Technique-Superviser un réseau avec Zabbix et Grafana.
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/e3c462a7-1e55-41d8-bd81-6d21167f4a98" width="100"/>
