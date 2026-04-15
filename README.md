@@ -445,7 +445,7 @@ S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bi
 -----
 
 > [\!NOTE]
-> La supervision d'un SGBD nécessite des métriques spécifiques (requêtes par seconde, connexions actives, threads) au-delà de la simple disponibilité du processus. MariaDB étant un fork de MySQL, les outils natifs Zabbix pour MySQL sont pleinement compatibles. L'objectif est d'anticiper la saturation des connexions (dette technique fréquente à T+6 mois sur les environnements FOG très sollicités).
+> La supervision d'un SGBD nécessite des métriques spécifiques (requêtes par seconde, connexions actives, threads) au-delà de la simple disponibilité du processus. MariaDB étant un fork de MySQL, les outils natifs Zabbix pour MySQL sont pleinement compatibles. L'objectif est d'anticiper la saturation des connexions.
 
 -----
 
