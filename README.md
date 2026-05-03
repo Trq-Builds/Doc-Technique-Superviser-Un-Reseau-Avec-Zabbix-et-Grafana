@@ -429,6 +429,7 @@ EOF
 
 -----
 
+<a id="dashboard-mysql"></a>
 ## `📈`︲2. Importation du dashboard MySQL dans Grafana.
 
 L'exploitation des données SGBD requiert un affichage temporel adapté aux variations de charge.
