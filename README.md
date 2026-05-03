@@ -443,6 +443,7 @@ L'exploitation des données SGBD requiert un affichage temporel adapté aux vari
 
 -----
 
+<a id="adaptation-panels"></a>
 ## `⚙️`︲3. Adaptation des panels.
 
 Le tableau de bord importé contient des panels génériques. Une épuration est nécessaire pour isoler le signal du bruit.
