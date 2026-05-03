@@ -507,5 +507,6 @@ Connectez-vous en SSH sur `srv-fog`, lancez `mysql -u root -p`, et exécutez les
 
 ---
 
+<a id="outils-ressources"></a>
 # ` 🧰 `︲Outils et ressources utilisées.
 
