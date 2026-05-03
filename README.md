@@ -106,7 +106,6 @@ Ce dépôt présente un guide complet pour la mise en place d’une infrastructu
 > - ` 🐬 `︲**MariaDB :** Système de gestion de base de données (MySQL) ︲[`🌐`](https://mariadb.org/)
 > - ` 🐧 `︲**Debian 13 :** OS pour srv-zabbix ︲[`🌐`](https://www.debian.org/)
 > - ` 🪟 `︲**Windows Server 2025 :** OS pour srv-ad1 ︲[`🌐`](https://www.microsoft.com/fr-fr/evalcenter/evaluate-windows-server-2022)
-> - ` 🔌 `︲~~**Cisco 2960 :** Matériel actif réseau (Switch)~~︲[`🌐`](https://www.cisco.com/)
 > - ` 📦 `︲**Virtualisation :** VMware ︲[`🌐`](https://www.vmware.com/)
 
 ---
@@ -394,6 +393,7 @@ S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bi
 
 -----
 
+<a id="template-mysql"></a>
 ## `🔗`︲1. Ajout du template MySQL by Zabbix Agent.
 
 Pour que l'agent Zabbix puisse interroger MariaDB de manière sécurisée, la création d'un compte avec des privilèges de lecture stricts est requise sur l'instance cible (`srv-fog`).
