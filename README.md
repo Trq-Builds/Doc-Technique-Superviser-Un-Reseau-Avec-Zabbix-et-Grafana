@@ -221,16 +221,21 @@ apt update && apt install grafana -y
 systemctl enable grafana-server --now
 ```
 
-2️⃣︲**Configuration du Plugin Zabbix**
+2️⃣︲**Installation du Plugin Zabbix (via l'interface GUI)**
 
-  * Installation : `grafana-cli plugins install alexanderzobnin-zabbix-app`
-  * Redémarrage : `systemctl restart grafana-server`
+1. Se connecter à Grafana sur `http://172.16.X.10:3000`.
+2. **Navigation :** `Administration` > `Plugins and data` > `Plugins`.
+3. Rechercher **zabbix** dans la barre de recherche.
+4. Cliquer sur le plugin **Alexandr Zobnin - Zabbix** puis sur **Install**.
+5. Une fois installé, cliquer sur **Enable**.
 
-3️⃣︲**Liaison Data Source**
-Dans Grafana (`port 3000`), ajout de la source Zabbix :
+3️⃣︲**Configuration de la source de données Zabbix**
 
-  * **URL :** `http://localhost/zabbix/api_jsonrpc.php`
-  * **Identifiants API :** `Admin` / `zabbix`
+1. **Navigation :** `Connections` > `Data sources` > `Add data source`.
+2. Rechercher **Zabbix** et le sélectionner.
+3. **URL :** saisir l'URL indiquée en filigrane dans le champ, soit `http://localhost/zabbix/api_jsonrpc.php`.
+4. **Identifiants API Zabbix :** `Admin` / `zabbix`.
+5. Cliquer sur **Save & test** pour valider la connexion.
 
 ---
 
@@ -360,26 +365,55 @@ Pour chaque panel critique (CPU, RAM, I/O Disque), la syntaxe de la requête Zab
 
 La surveillance de la disponibilité des processus critiques requiert une approche binaire (Up/Down). Le service SSH est audité via un check TCP natif.
 
-### P1 : Vérification côté Zabbix (Prérequis)
+### Étape 1 : Création du déclencheur dans Zabbix
 
-S'assurer que le template `Linux by Zabbix agent` assigné à srv-fog remonte bien la clé d'item standard.
+1. **Navigation :** `Data collection` > `Hosts` > sélectionner `srv-fog`.
+2. Aller dans l'onglet **Triggers** > **Create trigger**.
+3. Renseigner les champs suivants :
+   * **Name :** `SSH Service`
+   * **Severity :** `Average`
+   * **Expression :** `last(/FOG server/net.tcp.service[ssh])=0`
+4. Cliquer sur **Add** pour valider.
 
-  * **Clé cible :** `net.tcp.service[ssh]`
-  * **Type de retour attendu :** Numérique (0 ou 1).
+> Ce déclencheur émet une alerte dès que le service SSH ne répond plus sur le port 22.
 
-### P2 : Création du Panel Stat dans Grafana
+### Étape 2 : Création du Panel Stat dans Grafana
 
-1.  **Création :** Cliquer sur *Add panel* en haut du dashboard.
-2.  **Source de données :** Zabbix.
-3.  **Paramétrage de la Query :**
-      * Group : `Linux servers`
-      * Host : `srv-fog`
-      * Item : Saisir ou sélectionner `SSH Service Status` (lié à `net.tcp.service[ssh]`).
-4.  **Configuration Visuelle (Panneau de droite) :**
-      * Type de visualisation : **Stat**.
-      * **Value mappings (Mappage des valeurs) :** Règle de décision logique.
-          * Condition `1` -\> Texte : `Actif` -\> Couleur : `Vert`.
-          * Condition `0` -\> Texte : `Inactif (CRITIQUE)` -\> Couleur : `Rouge`.
+1. Ouvrir le dashboard **Monitoring réseau** > **Add panel**.
+2. **Source de données :** Zabbix.
+3. **Paramétrage de la Query :**
+   * Group : `Linux servers`
+   * Host : `srv-fog`
+   * Item : sélectionner l'item lié à `net.tcp.service[ssh]`.
+4. **Configuration Visuelle (panneau de droite) :**
+   * Type de visualisation : **Stat**.
+   * **Text mode :** `Value`.
+   * **Value mappings (Mappage des valeurs) :**
+     * Condition `1` → Texte : `Up` → Couleur : Vert.
+     * Condition `2` → Texte : `Down` → Couleur : Rouge.
+
+-----
+
+## `🖥️`︲4. Rubrique srv-zabbix dans le dashboard "Monitoring réseau".
+
+Le dashboard **Monitoring réseau** doit contenir une seconde rubrique dédiée à la supervision du serveur srv-zabbix, avec les mêmes panels que la rubrique srv-fog, à l'exception du panel SSH.
+
+### Création de la rubrique
+
+1. Ouvrir le dashboard **Monitoring réseau** en mode édition.
+2. Cliquer sur **Add** > **Row** et nommer la ligne `srv-zabbix`.
+3. Ajouter les panels suivants en dupliquant ceux de la rubrique srv-fog et en changeant la variable `Host` vers `srv-zabbix` :
+
+| Panel | Type | Item Zabbix |
+| :--- | :--- | :--- |
+| **srv-zabbix : OS** | Text | `System information` |
+| **srv-zabbix : Status** | Stat | Disponibilité de l'hôte |
+| **srv-zabbix : Disk Space** | Gauge | `Space utilization` en % |
+| **srv-zabbix : Memory** | Time series | `Available memory` |
+
+> Le panel SSH n'est **pas** reproduit pour cette rubrique.
+
+4. Sauvegarder le dashboard.
 
 -----
 
@@ -435,7 +469,7 @@ EOF
 L'exploitation des données SGBD requiert un affichage temporel adapté aux variations de charge.
 
 1.  **Navigation :** Dashboards \> Import.
-2.  **ID du Dashboard :** Utiliser l'ID communautaire optimisé `14963` (ou un ID spécifique au plugin Zabbix récent).
+2.  **ID du Dashboard :** Saisir l'identifiant `966` (Dashboard MySQL - Zabbix, source officielle Grafana).
 3.  **Configuration :**
       * **Name :** Zabbix - srv-fog MariaDB.
       * **Folder :** (Sélectionner votre dossier de supervision).
@@ -472,4 +506,3 @@ Vérifiez l'alignement des items critiques dans l'éditeur de panel. En cas de "
 Connectez-vous en SSH sur `srv-fog`, lancez `mysql -u root -p`, et exécutez les trois requêtes SQL listées en P0 pour créer l'utilisateur `zbx_monitor`.
 
 ---
-
